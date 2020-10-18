@@ -164,6 +164,13 @@ def find_secret():
 
 
 if __name__ == '__main__':
+    # Exercise 1
+    print("I, Petra Vankova, understand that cryptography is easy to mess up,\n",
+          "and that I will not carelessly combine pieces of cryptographic ciphers \n",
+          "to encrypt my users' data. I will not write non-study-purpose crypto \n"
+          "code myself, but defer to high-level libraries written by experts who \n"
+          "took the right decisions for me, like NaCL.")
+
     # Exercise 2
     print(encrypt_aes_block('90 miles an hour', 'CROSSTOWNTRAFFIC'))
 
