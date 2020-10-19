@@ -31,7 +31,7 @@ def encrypt_aes_block(x, key):
     else:
         data_bin = x
     key_bin = txt2bin(key)
-    if len(data_bin) + len(key_bin) != 32:
+    if len(data_bin) != 16 or + len(key_bin) != 16:
         raise Exception("Length of the plaintext must be 16 bytes, it is {} bytes.".format(len(x.encode('utf-8'))))
     cipher = AES.new(key_bin, AES.MODE_ECB)
     ciphertext = cipher.encrypt(data_bin)
@@ -44,7 +44,7 @@ def decrypt_aes_block(y, key):
     else:
         data_bin = y
     key_bin = txt2bin(key)
-    if len(data_bin) + len(key_bin) != 32:
+    if len(data_bin) != 16 or + len(key_bin) != 16:
         raise Exception("Length of the ciphertext must be 16 bytes, it is {} bytes.".format(len(y.encode('utf-8'))))
     cipher = AES.new(key_bin, AES.MODE_ECB)
     plaintext = cipher.decrypt(data_bin)
@@ -165,6 +165,7 @@ def find_secret():
 
 if __name__ == '__main__':
     # Exercise 1
+    print("Exercise 1")
     print("I, Petra Vankova, understand that cryptography is easy to mess up,\n",
           "and that I will not carelessly combine pieces of cryptographic ciphers \n",
           "to encrypt my users' data. I will not write non-study-purpose crypto \n"
@@ -172,29 +173,36 @@ if __name__ == '__main__':
           "took the right decisions for me, like NaCL.")
 
     # Exercise 2
+    print("Exercise 2")
     print(encrypt_aes_block('90 miles an hour', 'CROSSTOWNTRAFFIC'))
 
     # Exercise 3
+    print("Exercise 3")
     print(decrypt_aes_block('092fb4b0aa77beddb5e55df37b73faaa', 'CROSSTOWNTRAFFIC'))
 
     print(decrypt_aes_block('fad2b9a02d4f9c850f3828751e8d1565', 'VALLEYSOFNEPTUNE'))
 
     # Exercise 4
+    print("Exercise 4")
     print(pad('hello'))
 
     # Exercise 5
+    print("Exercise 5")
     unpadded = bin2txt(unpad("hello\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b"))
     print(unpadded)
 
     # Exercise 6
+    print("Exercise 6")
     print(encrypt_aes_ecb('Well, I stand up next to a mountain and I chop it down with the edge of my hand', 'vdchldslghtrturn'))
 
     # Exercise 7
+    print("Exercise 7")
     plaintext = decrypt_aes_ecb('792c2e2ec4e18e9d3a82f6724cf53848abb28d529a85790923c94b5c5abc34f50929a03550e678949542035cd669d4c66da25e59a5519689b3b4e11a870e7cea',
                           'If the mountains')
     print(bin2txt(plaintext))
 
     # Exercise 8
+    print("Exercise 8")
     with open("text1.hex", "r") as file:
         data = file.read().replace('\n','')
         order_data = swap_lines(data, 32, 0, 2)
@@ -202,6 +210,7 @@ if __name__ == '__main__':
         print(bin2txt(plaintext).split('\n')[0])
 
     # Exercise 9
+    print("Exercise 9")
     print(welcome("Jim"))
     print(welcome("Jim" + hex2txt("10101010101010101010101010101010")))
     print(welcome(hex2txt('000000')))
@@ -210,5 +219,6 @@ if __name__ == '__main__':
     print(bin2txt(decrypt_aes_ecb('75e01419cbb5065fd1c7fcc1091facfc46a36e9148f3a7277de22bd34e48ddd87edb62ceff6a92e3a59029a06e5e622b4e9eb1df207c25bebdcfc57385251689', 'RIDERSONTHESTORM')))
 
     # Exercise 10
+    print("Exercise 10")
     print(hide_secret('just listen find the magic key'))
     print("Secret: ", find_secret())
