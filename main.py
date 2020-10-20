@@ -104,6 +104,64 @@ def welcome(name):
     return ciphertext
 
 
+def produce_fake_welcome(wantedName):
+    orig_cipher = welcome(wantedName)
+
+    # calculate padding length
+    orig_cipher_len = len(orig_cipher)
+    s = ""
+    padding_len = 0
+    while True:
+        if len(welcome(wantedName+s)) > orig_cipher_len:
+            break
+        else:
+            padding_len += 1
+            s = s + "x"
+
+    target_pad = (padding_len + 14) % 16 #an admin is 2 char longer, - 2 = 14 in %16, + 14 because prevent of state target_pad < 0
+    target_len = (orig_cipher_len/2) - padding_len + 2 + target_pad
+
+    text_before_change = wantedName + " and you are a"
+    text_to_change = "n admin"
+
+    changing_len = len(text_to_change) + target_pad
+
+    # if target_len % 16 = 0, we have to add padding block
+    if target_pad == 0:
+        target_pad = 16
+    # produce source to fake
+    source_string = text_before_change+text_to_change
+    # padding
+    pad_hex = format(target_pad, "x").rjust(2, '0')
+    source_padding_hex = ""
+    for i in range(0, target_pad):
+        source_padding_hex += pad_hex
+
+    # final source in hex
+    source_string_hex = txt2hex(source_string) + source_padding_hex
+
+    src_hex_len = len(source_string_hex)
+    fake_output = ""
+    first_byte = src_hex_len - (changing_len * 2)  # len in bytes, we count hex digit
+
+    # encrypt block in welcome function
+    for i in range(0, int(src_hex_len/32)):
+        start_block = i * 32 + (src_hex_len % 32)
+        end_block = (i + 1) * 32 + (src_hex_len % 32)
+        if first_byte < end_block:
+            block = source_string_hex[start_block : end_block]
+            in2 = welcome(hex2txt("000000" + block))
+            fake_output += in2[32:64]
+
+    orig_block_len = target_len - changing_len
+    num_orig_block = int(orig_block_len / 16)
+    fake_welcome = orig_cipher[0:num_orig_block*32]+fake_output
+
+    print("Decrypt test")
+    print(fake_welcome)
+    print(bin2txt(decrypt_aes_ecb(fake_welcome, 'RIDERSONTHESTORM')))
+
+
 def hide_secret(x):
     if type(x) is str:
         x = txt2bin(x)
@@ -213,10 +271,10 @@ if __name__ == '__main__':
     print("Exercise 9")
     print(welcome("Jim"))
     print(welcome("Jim" + hex2txt("10101010101010101010101010101010")))
-    print(welcome(hex2txt('000000')))
-    print(welcome("JimPetra and " + hex2txt("000000000000")))
-    print(welcome("Jimyou are an admin"))
-    print(bin2txt(decrypt_aes_ecb('75e01419cbb5065fd1c7fcc1091facfc46a36e9148f3a7277de22bd34e48ddd87edb62ceff6a92e3a59029a06e5e622b4e9eb1df207c25bebdcfc57385251689', 'RIDERSONTHESTORM')))
+    print(welcome("Jim" + "you are admin"))
+    print("--")
+    produce_fake_welcome("Petra")
+    print("--")
 
     # Exercise 10
     print("Exercise 10")
