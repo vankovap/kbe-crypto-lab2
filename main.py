@@ -236,8 +236,6 @@ if __name__ == '__main__':
 
     # Exercise 3
     print("== Exercise 3 ==")
-    print(decrypt_aes_block('092fb4b0aa77beddb5e55df37b73faaa', 'CROSSTOWNTRAFFIC'))
-
     print(decrypt_aes_block('fad2b9a02d4f9c850f3828751e8d1565', 'VALLEYSOFNEPTUNE'), "\n")
 
     # Exercise 4
