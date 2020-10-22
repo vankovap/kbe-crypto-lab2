@@ -203,7 +203,7 @@ def find_secret():
             while not found:
                 found, secret_key = get_secret_char(secret, block, i, chr(letter))
                 if found:
-                    if int(secret_key,16) < 32:
+                    if int(secret_key, 16) == 1:
                         end = True
                         if end:
                             break
@@ -223,60 +223,60 @@ def find_secret():
 
 if __name__ == '__main__':
     # Exercise 1
-    print("Exercise 1")
+    print("== Exercise 1 ==")
     print("I, Petra Vankova, understand that cryptography is easy to mess up,\n",
           "and that I will not carelessly combine pieces of cryptographic ciphers \n",
           "to encrypt my users' data. I will not write non-study-purpose crypto \n"
           "code myself, but defer to high-level libraries written by experts who \n"
-          "took the right decisions for me, like NaCL.")
+          "took the right decisions for me, like NaCL.", "\n")
 
     # Exercise 2
-    print("Exercise 2")
-    print(encrypt_aes_block('90 miles an hour', 'CROSSTOWNTRAFFIC'))
+    print("== Exercise 2 ==")
+    print(encrypt_aes_block('90 miles an hour', 'CROSSTOWNTRAFFIC'), "\n")
 
     # Exercise 3
-    print("Exercise 3")
+    print("== Exercise 3 ==")
     print(decrypt_aes_block('092fb4b0aa77beddb5e55df37b73faaa', 'CROSSTOWNTRAFFIC'))
 
-    print(decrypt_aes_block('fad2b9a02d4f9c850f3828751e8d1565', 'VALLEYSOFNEPTUNE'))
+    print(decrypt_aes_block('fad2b9a02d4f9c850f3828751e8d1565', 'VALLEYSOFNEPTUNE'), "\n")
 
     # Exercise 4
-    print("Exercise 4")
-    print(pad('hello'))
+    print("== Exercise 4 ==")
+    print(pad('hello'), "\n")
 
     # Exercise 5
-    print("Exercise 5")
+    print("== Exercise 5 ==")
     unpadded = bin2txt(unpad("hello\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b"))
-    print(unpadded)
+    print(unpadded, "\n")
 
     # Exercise 6
-    print("Exercise 6")
-    print(encrypt_aes_ecb('Well, I stand up next to a mountain and I chop it down with the edge of my hand', 'vdchldslghtrturn'))
+    print("== Exercise 6 ==")
+    print(encrypt_aes_ecb('Well, I stand up next to a mountain and I chop it down with the edge of my hand', 'vdchldslghtrturn'), "\n")
 
     # Exercise 7
-    print("Exercise 7")
+    print("== Exercise 7 ==")
     plaintext = decrypt_aes_ecb('792c2e2ec4e18e9d3a82f6724cf53848abb28d529a85790923c94b5c5abc34f50929a03550e678949542035cd669d4c66da25e59a5519689b3b4e11a870e7cea',
                           'If the mountains')
-    print(bin2txt(plaintext))
+    print(bin2txt(plaintext), "\n")
 
     # Exercise 8
-    print("Exercise 8")
+    print("== Exercise 8 ==")
     with open("text1.hex", "r") as file:
         data = file.read().replace('\n','')
         order_data = swap_lines(data, 32, 0, 2)
         plaintext = decrypt_aes_ecb(order_data, 'TLKNGBTMYGNRTION')
-        print(bin2txt(plaintext).split('\n')[0])
+        print(bin2txt(plaintext).split('\n')[0], "\n")
 
     # Exercise 9
-    print("Exercise 9")
+    print("== Exercise 9 ==")
     print(welcome("Jim"))
     print(welcome("Jim" + hex2txt("10101010101010101010101010101010")))
     print(welcome("Jim" + "you are admin"))
     print("--")
     produce_fake_welcome("Petra")
-    print("--")
+    print("--", "\n")
 
     # Exercise 10
-    print("Exercise 10")
+    print("== Exercise 10 ==")
     print(hide_secret('just listen find the magic key'))
     print("Secret: ", find_secret())
